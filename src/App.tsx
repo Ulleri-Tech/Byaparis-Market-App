@@ -1,16 +1,17 @@
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Footer from './components/Footer'
+import Header from './components/Header'
+import HomePage from './pages/Homepage'
 
 function App() {
 
   return (
     <>
-    <div className="App">
-      <h1>Welcome to Byapari's MarketPlace</h1>
-     
-    </div>
-     <div className="text-3xl bg-blue-300 p-3">
-       Search Here
-   </div>
+    <Header/>
+    <HomePage/>
+    <Footer/>
    </>
   )
 }
