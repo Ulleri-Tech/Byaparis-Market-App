@@ -1,8 +1,15 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import ImageTag from "@/components/ImageTag";
+import Search from "@/components/Search";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export default function Home() {
+  const [queryClient] = React.useState(() => new QueryClient());
+
   return (
     <>
       <Head>
@@ -10,27 +17,31 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>WholesalerBase.com | Marketplace for Wholesaler</title>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+        />
       </Head>
-
+      <Header />
       <main className={styles.main}>
         <h1>Welcome to Wholesaler Base</h1>
+        <QueryClientProvider client={queryClient}>
+          <Search />
+        </QueryClientProvider>
+
         <div className={styles.description}>
-         
           <div>
-            <div className="text-3xl bg-blue-300 p-3">Search Here</div>
-    
-              <ImageTag
-                src="/marketplace.ico"
-                alt="Marketplace Logo"
-                width={100}
-                height={24}
-                priority
-              />
-     
+            <ImageTag
+              src="/marketplace.ico"
+              alt="Marketplace Logo"
+              width={100}
+              height={24}
+              priority
+            />
           </div>
         </div>
 
-        <div className={styles.grid}>
+        {/* <div className={styles.grid}>
         <a
             href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className={styles.card}
@@ -87,8 +98,9 @@ export default function Home() {
               with&nbsp;Vercel.
             </p>
           </a>
-        </div>
+        </div> */}
       </main>
+      <Footer />
     </>
   );
 }
