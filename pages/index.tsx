@@ -16,10 +16,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Welcome to Byapari&apos;s MarketPlace</h1>
         <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
-          </p>
+         
           <div>
             <div className="text-3xl bg-blue-300 p-3">Search Here</div>
             <a
@@ -30,8 +27,7 @@ export default function Home() {
               By{" "}
               <Image
                 src="/marketplace.ico"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
+                alt="Marketplace Logo"
                 width={100}
                 height={24}
                 priority
