@@ -4,13 +4,13 @@ export default function Footer (){
 
     return (
       <footer className="w-full flex flex-col relative">
-      <div className=" w-fullflex justify-center items-center mx-auto px-2 py-1 md:py-2">
+      {/* <div className=" w-full flex justify-center items-center mx-auto px-2 py-1 md:py-2">
         <a href="#" className="text-white text-base leading-4 text-center">
           Back to top
         </a>
-      </div>
+      </div> */}
       <div className=" w-full flex flex-col text-center md:text-left md:flex-row justify-center md:justify-between items-center md:items-start mx-auto px-2 md:px-48 lg:px-96 py-4 md:py-10">
-        <section className="my-2 md:my-0">
+        {/* <section className="my-2 md:my-0">
           <h5 className="font-bold text-white text-base">Get to Know Us</h5>
           <ul className="text-gray-200 text-base">
             <li className="leading-5">
@@ -59,12 +59,12 @@ export default function Footer (){
               <a href="#">Help</a>
             </li>
           </ul>
-        </section>
+        </section> */}
       </div>
      
       <div className="w-full flex justify-center items-center  mx-auto py-2 border-t border-gray-700">
         <ul className=" flex text-base">
-          <li>
+          {/* <li>
             <a href="#" className="font-bold xl:mr-10 mr-3">
               Conditions of Use
             </a>
@@ -73,7 +73,7 @@ export default function Footer (){
             <a href="#" className="font-bold xl:mr-10 mr-3">
               Privacy Notice
             </a>
-          </li>
+          </li> */}
           
           <li>
             <span className="text-gray-700">
