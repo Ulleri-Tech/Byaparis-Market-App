@@ -9,7 +9,7 @@ export default function Home() {
         <link rel="icon" type="image/icon" href="/marketplace.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>Wholesaler Base Marketplace</title>
+        <title>WholesalerBase.com | Marketplace for Wholesaler</title>
       </Head>
 
       <main className={styles.main}>
