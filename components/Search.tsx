@@ -38,7 +38,7 @@ export default function Search() {
         ? <h2>No Products</h2> 
 
         : data.map((product,_id) => (
-          <ProductItem keys={_id} product={product} handleCheck={_id} />
+          <ProductItem key={_id} product={product} handleCheck={_id} />
         ))
       }
     </div>
@@ -52,7 +52,7 @@ export default function Search() {
     {
     
     ALL_PRODUCTS.slice(0,6).map((product,_id) => (
-        <ProductItem keys={_id} product={product} handleCheck={_id} />
+        <ProductItem key={_id} product={product} handleCheck={_id} />
       ))
     }
   </div>
