@@ -20,6 +20,10 @@ export default function Document() {
           name="description"
           content="A platform or a Marketplace for B2B (Business to Business) to list your products for sale. Most useful for any wholesaler or manufacturer."
         />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+        />
       </Head>
       <body>
         <Main />

@@ -3,6 +3,8 @@ import searchProducts from "../utils/actions";
 import React from "react";
 
 import useDebounce from "../utils/useDebounce";
+import ProductItem from "./product/productItem";
+import { ALL_PRODUCTS } from "@/utils/constant";
 interface CustomEvent extends React.ChangeEvent<HTMLInputElement> {
   target: HTMLInputElement;
 }
@@ -30,11 +32,31 @@ export default function Search() {
     }
 
     if (isSuccess) {
-      return <div className="search-message">{data.length}</div>;
+       return <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 mt-6">
+      {
+        data.length === 0 
+        ? <h2>No Products</h2> 
+
+        : data.map((product,_id) => (
+          <ProductItem keys={_id} product={product} handleCheck={_id} />
+        ))
+      }
+    </div>
     }
 
     return <></>;
   };
+
+  const showDefaultProduct = ()=>{
+    return <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 mt-6">
+    {
+    
+    ALL_PRODUCTS.slice(0,6).map((product,_id) => (
+        <ProductItem keys={_id} product={product} handleCheck={_id} />
+      ))
+    }
+  </div>
+  }
 
   const handleQueryChange = (event: CustomEvent) => {
     setQuery(event.target.value);
@@ -89,7 +111,9 @@ export default function Search() {
             </button>
           </form>
         </div>
-        <div>{renderResult()}</div>
+         
+        <div>{query.length > 0 ? renderResult() : showDefaultProduct()}</div>
+            
     </>
   );
 }

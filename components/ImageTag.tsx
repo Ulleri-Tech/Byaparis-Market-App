@@ -6,5 +6,5 @@ const customLoader = ({ src, width }: any) => {
 }
   
   export default function ImageTag(props: any) {
-    return <Image {...props} loader={customLoader} />
+    return <Image {...props} alt={props.alt || ""} loader={customLoader} />
   }
