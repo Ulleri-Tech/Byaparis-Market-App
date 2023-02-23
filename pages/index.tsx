@@ -1,7 +1,6 @@
-import ImageTag from "@/components/Image";
+import ImageTag from "@/components/ImageTag";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-
 
 export default function Home() {
   return (
@@ -10,21 +9,16 @@ export default function Home() {
         <link rel="icon" type="image/icon" href="/marketplace.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>Byapari&apos;s Marketplace</title>
+        <title>WholesalerBase.com | Marketplace for Wholesaler</title>
       </Head>
 
       <main className={styles.main}>
-        <h1>Welcome to Byapari&apos;s MarketPlace</h1>
+        <h1>Welcome to Wholesaler Base</h1>
         <div className={styles.description}>
          
           <div>
             <div className="text-3xl bg-blue-300 p-3">Search Here</div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{" "}
+    
               <ImageTag
                 src="/marketplace.ico"
                 alt="Marketplace Logo"
@@ -32,22 +26,25 @@ export default function Home() {
                 height={24}
                 priority
               />
-            </a>
+     
           </div>
         </div>
 
         <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+        <a
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className={styles.card}
             target="_blank"
             rel="noopener noreferrer"
           >
+            <h2 >
+              Learn <span>-&gt;</span>
+            </h2>
             <p >
-              Find in-depth information about Next.js features and&nbsp;API.
+              Learn about Next.js in an interactive course with&nbsp;quizzes!
             </p>
           </a>
-
+          
           <a
             href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className={styles.card}

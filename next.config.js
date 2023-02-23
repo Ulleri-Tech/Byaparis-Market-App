@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     loader: 'custom',
   },
+  output: 'standalone'
 }
 
 module.exports = nextConfig
