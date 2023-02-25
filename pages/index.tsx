@@ -16,23 +16,20 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>WholesalerBase.com | Marketplace for Wholesaler</title>
-    
       </Head>
       <Header />
       <main className={styles.main}>
-        <h1>Welcome to Wholesaler Base</h1>
+        <h3 className="text-xl sm:text-2xl max-w-xl">
+          Welcome to <strong>Wholesaler Base</strong>, the premier online
+          marketplace for wholesale products.{" "}
+        </h3>
         <QueryClientProvider client={queryClient}>
           <Search />
         </QueryClientProvider>
 
         <div className={styles.description}>
-          <div>
-          
-          </div>
-    
+          <div></div>
         </div>
-
-        
       </main>
       <Footer />
     </>

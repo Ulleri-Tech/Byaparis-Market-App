@@ -1,29 +1,36 @@
-version: '3'
+version: "3"
 
 services:
-  app:
+  web:
+    container_name: "next-app"
     build: .
     ports:
       - 3000:3000
+    depends_on:
+      - db
+    networks:
+      - next-app
+  db:
+    container_name: "mongo-db"
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - wholesalerbase:/data/db
+    networks:
+       - next-app
+volumes:
+ wholesalerbase: 
+
+networks:
+  next-app:
+    driver: bridge
 
 # version: '3.8'
 # services:
-#   web:
-#     build: ./frontend
-#     ports:
-#       - 3000:3000
+
 #   api:
 #     build: ./backend
 #     ports:
 #       - 3001:3001
-#     environment:
-#         DB_URL: mongodb://db/wholesalerbase
-#   db:
-#       image: mongo:4.0-xenial
-#       ports:
-#         - 27017:27017
-#       volumes:
-#         - wholesalerbase:/data/db
 
-#     volumes:
-#       wholesalerbase

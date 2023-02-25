@@ -41,7 +41,7 @@ const ProductItem = ({ product, handleCheck }: any) => {
         <div className="flex flex-col text-left">
         <Link href="#" >
           <h5
-            className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
+            className="text-xl font-semibold tracking-tight text-gray-900 "
             title={product.title}
           >
             {product.title}

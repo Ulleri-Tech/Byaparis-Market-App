@@ -16,7 +16,8 @@ It is a platform for B2B buyers and sellers(Who is Wholesaler), primarily intend
 
 2. Using Docker Command
 
-   > docker build . -t app-image-name and run docker run -d -p 3000:3000 app-image-name
+   > docker build . -t app-image-name
+   > docker run -d -p 3000:3000 app-image-name
 
 3. Without using Docker
    > npm run dev
@@ -31,3 +32,25 @@ It is a platform for B2B buyers and sellers(Who is Wholesaler), primarily intend
 > docker-compose ps
 > docker-compose build --help
 > docker-compose down (To stop container)
+> docker logs <container-id>
+> docker container prune
+> docker image prune
+> docker image rm <container-name-or-id>
+
+## Docker Volumes
+
+> docker volume create app-data
+> docker volume inspect <volume_name>
+> docker run -d -p 4000:3000 -v app-data:/app/data <image-name>
+
+# Mongo Docker
+
+> docker exec -it -u root ab3 sh
+> mongo
+> show dbs
+
+# Alpine Node Shell command
+
+> Adding User
+> addgroup app
+> adduser -S -G app app
