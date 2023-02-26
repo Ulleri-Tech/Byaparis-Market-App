@@ -9,7 +9,7 @@ const connectToDatabase = async() => {
         return;
     }
 
-    mongoose.connect("mongodb://localhost:27017",err => {
+ mongoose.connect("mongodb://localhost:27017/products",err => {
         console.log('Connecting to mongodb.')
         if(err) throw err;
         console.log('Connected to mongodb.')

@@ -1,39 +1,47 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true
+const ProductSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    code: {
+      type: String,
+      trim: true,
     },
     price: {
-        type: Number,
-        required: true,
-        trim: true
+      type: Number,
+      required: true,
+      trim: true,
     },
     description: {
-        type: String,
-        required: true
-    },
-    images: {
-        type: Array,
-        required: true
+      type: String,
+      required: true,
     },
     category: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
+    },
+    images: {
+      type: Array,
+      required: true,
     },
     sold: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     inStock: {
-        type: Number,
-        default: 0
-    }
-}, {
-    timestamps: true
-})
+      type: Number,
+      default: 0,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-let Dataset = mongoose.models.product || mongoose.model('product', productSchema)
-export default Dataset
+let Product =
+  mongoose.models?.product || mongoose.model("product", ProductSchema);
+export default Product;

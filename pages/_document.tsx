@@ -24,6 +24,7 @@ export default function Document() {
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
         />
+        <link rel="icon" type="image/icon" href="/marketplace.ico" />
       </Head>
       <body>
         <Main />
