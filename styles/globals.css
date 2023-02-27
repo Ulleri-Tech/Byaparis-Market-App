@@ -41,7 +41,14 @@ h1 {
   line-height: 1.1;
 }
 
-
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  /* Add any other styling you want */
+}
 
 /* 
 

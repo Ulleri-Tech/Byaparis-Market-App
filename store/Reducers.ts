@@ -6,7 +6,6 @@ export const ACTIONS = {
 }
 
 const reducers = (state:any, action:any) => {
-    console.log(state,action)
     switch(action.type){
         case ACTIONS.NOTIFY:
             return {
@@ -21,7 +20,7 @@ const reducers = (state:any, action:any) => {
         case ACTIONS.ADD_CART:
             return {
                 ...state,
-                cart: action.payload
+                cart: [...state.cart, ...action.payload]
             };
       
         case ACTIONS.ADD_ORDERS:

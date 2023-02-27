@@ -1,24 +1,13 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { useRouter } from "next/router";
-import isLoggedIn from "@/helpers/checkAuth";
+import { useStore } from "@/store/GlobalStore";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [goodToken, setGoodToken] = useState(false);
-
+  const { dispatch } = useStore();
   const router = useRouter();
-
-  useEffect(() => {
-    console.log(goodToken)
-    const isAuthenticated = isLoggedIn();
-    if (isAuthenticated) {
-      router.push("/dashboard");
-    }else{
-      setGoodToken(false)
-    }
-  }, [goodToken]);
-
+  
   async function submitForm() {
     const body = JSON.stringify({ email, password });
     const res = await fetch("/api/auth/login", {
@@ -29,12 +18,12 @@ export default function Login() {
       body,
     }).then((t) => t.json());
 
-    const token = res.token;
 
-    if (token) {
-      // Add the token to session storage
-      sessionStorage.setItem("token", token);
-      setGoodToken(true)
+    if (res.token) {
+      dispatch({ type: "AUTH", payload: {token:res.token,user:res.user} });
+      // Add the token to local storage
+       localStorage.setItem("token", res.token);
+       router.push("/dashboard");
     }
   }
   return (

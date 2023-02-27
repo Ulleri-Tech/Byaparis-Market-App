@@ -12,10 +12,10 @@ import {
  *  Pagination /api/products?page=1&limit=20
  *
  */
-export default async (
+export default async function ProductAPI (
   req: NextApiRequest,
   res: NextApiResponse<ProductResponse[] | CreatedResponse | ErrorResponse>
-) => {
+){
   await connectToDatabase();
   switch (req.method) {
     case "GET":

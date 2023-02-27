@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <DataProvider>
         <Header />
-        <Component {...pageProps} />
+        <Component {...pageProps}/>
         <Footer />
       </DataProvider>
     </>
