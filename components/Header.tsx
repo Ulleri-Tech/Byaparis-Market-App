@@ -18,7 +18,7 @@ export default function Header() {
           />
         </Link>
 
-        <ul className="flex justify-end items-center gap-4 md:gap-10">
+        <ul className="flex justify-end items-center gap-2 sm:gap-4 md:gap-10">
           <li>
             <Link
               href="/"
