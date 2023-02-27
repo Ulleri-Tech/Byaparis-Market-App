@@ -19,8 +19,8 @@ export default function Dashboard() {
         <div className="flex w-full mx-auto text-left justify-center">
           {state.cart.length > 0 ? (
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-              {state.cart.map((item: any) => (
-                <li className="flex gap-2 h-20">
+              {state.cart.map((item: any, id:number) => (
+                <li key={id} className="flex gap-2 h-20">
                   <ImageTag
                     src={item.url}
                     className="object-cover"
