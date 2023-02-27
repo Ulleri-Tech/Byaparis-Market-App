@@ -26,9 +26,9 @@ const ProductItem = ({ product, handleCheck }: any) => {
           <Link href="#">
             <h5
               className="text-xl font-semibold tracking-tight text-gray-900 "
-              title={product.title}
+              title={product.name}
             >
-              {product.title}
+              {product.name}
             </h5>
           </Link>
 
