@@ -11,6 +11,7 @@ export default function Dashboard() {
   useEffect(() => {
     const isAuthenticated = isLoggedIn();
     if (!isAuthenticated) {
+      localStorage.removeItem('token')
       router.push("/login-seller");
     }
   }, [router]);

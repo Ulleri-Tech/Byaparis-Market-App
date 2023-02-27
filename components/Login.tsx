@@ -1,6 +1,7 @@
 import {useState } from "react";
 import { useRouter } from "next/router";
 import { useStore } from "@/store/GlobalStore";
+import { loginRequest } from "@/utils/actions";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -9,15 +10,8 @@ export default function Login() {
   const router = useRouter();
   
   async function submitForm() {
-    const body = JSON.stringify({ email, password });
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body,
-    }).then((t) => t.json());
 
+    const res = await loginRequest(email,password)
 
     if (res.token) {
       dispatch({ type: "AUTH", payload: {token:res.token,user:res.user} });
