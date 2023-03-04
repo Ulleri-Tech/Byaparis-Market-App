@@ -1,6 +1,6 @@
 import connectToDatabase from "../../helpers/connectDB";
 import type { NextApiRequest, NextApiResponse } from "next";
-import Product from "@/helpers/models/products";
+import {Product} from "@/helpers/models/products";
 import {
   CreatedResponse,
   ErrorResponse,
@@ -56,18 +56,16 @@ class APIfeatures {
     excludeFields.forEach((el) => delete queryObj[el]);
     let options: { [key: string]: any } = {};
     if (queryObj.category && queryObj.category !== "all")
-      
       options["category"] = queryObj.category;
     if (queryObj.name && queryObj.name !== "all")
-      options["name"] = { $regex: queryObj.name };
+      options["name"] = { $regex: queryObj.name, $options: "i" };
 
     const projection = {
       updatedAt: 0,
       __v: 0,
     };
-    console.log(options)
-    this.query = this.query.find(options, projection);
 
+    this.query = this.query.find(options, projection);
     return this;
   }
 

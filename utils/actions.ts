@@ -1,5 +1,6 @@
 import { ALL_PRODUCTS } from "./constant";
 import jwt from "jsonwebtoken";
+import { ProductResponse } from "@/helpers/types";
 
 export const loginRequest = async (
   email: string,
@@ -16,29 +17,6 @@ export const loginRequest = async (
   }).then((t) => t.json());
 };
 
-export const searchProducts = (
-  query: string
-): Promise<
-  {
-    name: string;
-    code: string;
-    price: number;
-    inStock: number;
-    description: string;
-    checked: boolean;
-    url: string;
-  }[]
-> => {
-  return new Promise((resolve) => {
-    const matchingProducts = ALL_PRODUCTS.filter(({ name }) =>
-      name.includes(query.toLowerCase())
-    );
-    // Artificial timeout for demonstration purposes
-    setTimeout(() => {
-      resolve(matchingProducts);
-    }, 500);
-  });
-};
 
 export const getUserData = (): Promise<{
   token: string;
@@ -56,4 +34,41 @@ export const getUserData = (): Promise<{
       ? resolve({ token: token, user: json?.email })
       : reject("Invalid User");
   });
+};
+
+
+export const getFeaturedProducts = async(page:number): Promise<ProductResponse[]> =>{
+  console.log('get featured')
+  const res =  await fetch(`/api/products?page=${page}&limit=6`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    }
+  })
+  if(res.ok){
+    return res.json()
+  }
+  return [];
+}
+
+
+export const searchProducts = async(
+  query: string
+): Promise<
+ProductResponse[]
+> => {
+  console.log('api fetch')
+  const productName = query.trim();
+  const res = await fetch(`api/products?name=${productName}`,{
+    method: "GET",
+    headers:{
+      "content-type": "application/json",
+    }
+  })
+  if(res.ok){
+    return res.json()
+  }
+  return [];
+  
+
 };

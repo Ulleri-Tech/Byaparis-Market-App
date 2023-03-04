@@ -6,8 +6,7 @@ export type ProductResponse = {
     description: string,
     images: string[],
     sold: number,
-    inStock: number,
-    createdAt: string,
+    inStock: number
   };
 
  export type CreatedResponse = {
