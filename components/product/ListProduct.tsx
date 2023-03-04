@@ -1,18 +1,20 @@
-import { createProduct } from "@/utils/actions";
-import { useEffect, useState } from "react";
+import { ProductRequest } from "@/helpers/types";
+import { createProduct, uploadImages } from "@/utils/actions";
+import { useState } from "react";
 import Button from "../common/Button";
 import TextInput from "../common/TextInput";
+import ImageTag from "../ImageTag";
 
 export default function ListProduct() {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  const [product, setProduct] = useState({
+  const [product, setProduct] = useState<ProductRequest>({
     name: "",
     code: "",
     category: "",
     price: 0,
-    stock: 0,
+    inStock: 0,
     description: "",
-    images: []
+    images: [],
   });
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,10 +37,12 @@ export default function ListProduct() {
       <ul className="mt-1 text-sm text-gray-500 flex gap-2">
         {selectedFileArray.map((file, index) => (
           <li key={index}>
-            <img
+            <ImageTag
               className="w-10 border border-gray-400"
               src={URL.createObjectURL(file)}
               alt={file.name}
+              width={40}
+              height={40}
             />
           </li>
         ))}
@@ -46,25 +50,44 @@ export default function ListProduct() {
     );
   };
 
-  const handleCreate = async(event:React.FormEvent<HTMLFormElement>) => {
+  const handleCreate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     // code to create product
-    
-    console.log(selectedFiles)
-    
-   
+    const formData = new FormData();
 
+    if (!selectedFiles) return;
 
+    // Assume selectedFiles is a FileList containing multiple files
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append(`files-${i}`, selectedFiles[i]);
+    }
+    const urls = await uploadImages(formData);
+    setProduct({ ...product, images: urls.data });
+
+    const result = await createProduct(product);
+    if (result._id) {
+      setProduct({
+        name: "",
+        code: "",
+        category: "",
+        price: 0,
+        inStock: 0,
+        description: "",
+        images: [],
+      });
+    }
   };
   return (
-  <form onSubmit={handleCreate} className="my-10 text-left px-10 max-w-md mx-auto">
-      <h2>Create a Product</h2>
-
+    <form
+      onSubmit={handleCreate}
+      className="my-10 text-left px-10 max-w-md mx-auto"
+    >
       <TextInput
         label="Product Name"
         value={product.name}
         onChange={(e) => setProduct({ ...product, name: e.target.value })}
-required    
+        required
       />
       <TextInput
         label="Product Code"
@@ -87,17 +110,17 @@ required
           label="Quantity in Stock"
           inputMode="numeric"
           required
-          value={"" + product.stock}
+          value={"" + product.inStock}
           onChange={(e) => {
             const onlyNumbers = e.target.value.replace(/[^0-9]/g, "");
-            setProduct({ ...product, stock: +onlyNumbers });
+            setProduct({ ...product, inStock: +onlyNumbers });
           }}
         />
       </div>
 
       <TextInput
         label="Category"
-        onChange={(e) => console.log(e.target.value)}
+        onChange={(e) => setProduct({ ...product, category: e.target.value })}
       />
       <div className="flex flex-col my-4 ">
         <label
@@ -110,6 +133,9 @@ required
           id="description"
           rows={2}
           required
+          onChange={(e) =>
+            setProduct({ ...product, description: e.target.value })
+          }
           className="block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
         ></textarea>
       </div>
@@ -140,7 +166,9 @@ required
           )}
         </div>
         <div className="mt-4 flex justify-center">
-          <Button type="submit"  theme="yellow">Create Product</Button>
+          <Button type="submit" theme="yellow">
+            Create Product
+          </Button>
         </div>
       </div>
     </form>

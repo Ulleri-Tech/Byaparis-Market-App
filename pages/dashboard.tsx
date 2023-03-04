@@ -1,4 +1,4 @@
-import TextInput from "@/components/common/TextInput";
+import Button from "@/components/common/Button";
 import ListProduct from "@/components/product/ListProduct";
 import isLoggedIn from "@/helpers/checkAuth";
 import { useStore } from "@/store/GlobalStore";
@@ -34,11 +34,20 @@ export default function Dashboard() {
           DashBoard | WholesalerBase.com | Marketplace for Wholesaler
         </title>
       </Head>
-      <div className="mt-20">This is Dashboard</div>
-
-    <ListProduct/>
-
-      <button onClick={logout}>Logout</button>
+      <div className="flex mx-auto justify-around max-w-lg mt-24">
+      <div className="font-bold"> Dashboard</div>
+      <Button
+        leftIcon={<i className="ri-logout-box-line"></i>}
+        theme="danger"
+        size="small"
+        onClick={logout}
+      >
+        Logout
+      </Button>
+        
+      </div>
+     
+      <ListProduct />
     </>
   );
 }

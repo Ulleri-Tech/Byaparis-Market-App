@@ -11,6 +11,8 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "cloudinary": "^1.35.0",
+    "formidable": "^2.1.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.7.0",
     "next": "^13.1.6",
@@ -24,6 +26,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/formidable": "^2.0.5",
     "@types/jest": "^29.4.0",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "18.14.0",

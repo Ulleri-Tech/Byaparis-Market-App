@@ -4,6 +4,7 @@ export type ProductResponse = {
     code: string,
     price: number,
     description: string,
+    category:string,
     images: string[],
     sold: number,
     inStock: number
@@ -18,6 +19,7 @@ export type ProductResponse = {
     code: string,
     price: number,
     description: string,
+    category:string,
     images: string[],
     inStock: number
   };

@@ -79,3 +79,15 @@ export const searchProducts = async (
   }
   return [];
 };
+
+export const uploadImages = async (data: FormData) => {
+  const response = await fetch("/api/upload", {
+    method: "POST",
+    body: data,
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
+};
