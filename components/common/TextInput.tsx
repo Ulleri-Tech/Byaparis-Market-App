@@ -7,6 +7,7 @@ type TextInputProps = {
   className?: string;
   value?:string;  
   inputMode?:"search" | "text" | "email" | "tel" | "url" | "none" | "numeric" | "decimal";
+  required?:boolean;
 };
 
 const TextInput: React.FC<TextInputProps> = ({ label, onChange = () => {}, className = '', inputMode='text', ...props}) => {
@@ -14,7 +15,7 @@ const TextInput: React.FC<TextInputProps> = ({ label, onChange = () => {}, class
     <div className={`flex flex-col my-2 ${className}`}>
       <label
         htmlFor={`text-input-id${label}`}
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900 "
       >
         {label}
       </label>

@@ -9,11 +9,15 @@ export type ProductResponse = {
     inStock: number
   };
 
- export type CreatedResponse = {
-    status: "ok";
-    count: number;
-  };
-  
   export type ErrorResponse = {
     err: string;
+  };
+
+  export type ProductRequest = {
+    name: string,
+    code: string,
+    price: number,
+    description: string,
+    images: string[],
+    inStock: number
   };

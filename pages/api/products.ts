@@ -2,7 +2,6 @@ import connectToDatabase from "../../helpers/connectDB";
 import type { NextApiRequest, NextApiResponse } from "next";
 import {Product} from "@/helpers/models/products";
 import {
-  CreatedResponse,
   ErrorResponse,
   ProductResponse,
 } from "@/helpers/types";
@@ -14,7 +13,7 @@ import {
  */
 export default async function ProductAPI (
   req: NextApiRequest,
-  res: NextApiResponse<ProductResponse[] | CreatedResponse | ErrorResponse>
+  res: NextApiResponse<ProductResponse[] | ProductResponse | ErrorResponse>
 ){
   await connectToDatabase();
   switch (req.method) {
@@ -101,7 +100,7 @@ class APIfeatures {
 
 async function createProduct(
   req: NextApiRequest,
-  res: NextApiResponse<CreatedResponse | ErrorResponse>
+  res: NextApiResponse<ProductResponse | ErrorResponse>
 ) {
   try {
     // const result = await auth(req, res)
@@ -134,7 +133,7 @@ async function createProduct(
 
     await newProduct.save();
 
-    res.status(201).end("Success! Created a new product");
+    res.status(201).json(newProduct)
   } catch (err) {
     console.log(err);
     return res.status(500).json({ err: "Failed to create product" });

@@ -1,6 +1,5 @@
-import { ALL_PRODUCTS } from "./constant";
 import jwt from "jsonwebtoken";
-import { ProductResponse } from "@/helpers/types";
+import { ProductRequest, ProductResponse } from "@/helpers/types";
 
 export const loginRequest = async (
   email: string,
@@ -16,7 +15,6 @@ export const loginRequest = async (
     body,
   }).then((t) => t.json());
 };
-
 
 export const getUserData = (): Promise<{
   token: string;
@@ -36,39 +34,48 @@ export const getUserData = (): Promise<{
   });
 };
 
+export const createProduct = async (
+  product: ProductRequest
+): Promise<ProductResponse> => {
+  console.log("create product");
+  const body = JSON.stringify(product);
+  const res = await fetch("/api/products", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body,
+  });
+  return res.json();
+};
 
-export const getFeaturedProducts = async(page:number): Promise<ProductResponse[]> =>{
-  console.log('get featured')
-  const res =  await fetch(`/api/products?page=${page}&limit=6`, {
+export const getFeaturedProducts = async (
+  page: number
+): Promise<ProductResponse[]> => {
+  console.log("get featured");
+  const res = await fetch(`/api/products?page=${page}&limit=6`, {
     method: "GET",
     headers: {
       "content-type": "application/json",
-    }
-  })
-  if(res.ok){
-    return res.json()
-  }
-  return [];
-}
+    },
+  });
 
+  return res.json();
+};
 
-export const searchProducts = async(
+export const searchProducts = async (
   query: string
-): Promise<
-ProductResponse[]
-> => {
-  console.log('api fetch')
+): Promise<ProductResponse[]> => {
+  console.log("api fetch");
   const productName = query.trim();
-  const res = await fetch(`api/products?name=${productName}`,{
+  const res = await fetch(`api/products?name=${productName}`, {
     method: "GET",
-    headers:{
+    headers: {
       "content-type": "application/json",
-    }
-  })
-  if(res.ok){
-    return res.json()
+    },
+  });
+  if (res.ok) {
+    return res.json();
   }
   return [];
-  
-
 };
