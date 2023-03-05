@@ -1,5 +1,5 @@
-import { ALL_PRODUCTS } from "./constant";
 import jwt from "jsonwebtoken";
+import { ProductRequest, ProductResponse } from "@/helpers/types";
 
 export const loginRequest = async (
   email: string,
@@ -14,30 +14,6 @@ export const loginRequest = async (
     },
     body,
   }).then((t) => t.json());
-};
-
-export const searchProducts = (
-  query: string
-): Promise<
-  {
-    name: string;
-    code: string;
-    price: number;
-    inStock: number;
-    description: string;
-    checked: boolean;
-    url: string;
-  }[]
-> => {
-  return new Promise((resolve) => {
-    const matchingProducts = ALL_PRODUCTS.filter(({ name }) =>
-      name.includes(query.toLowerCase())
-    );
-    // Artificial timeout for demonstration purposes
-    setTimeout(() => {
-      resolve(matchingProducts);
-    }, 500);
-  });
 };
 
 export const getUserData = (): Promise<{
@@ -56,4 +32,62 @@ export const getUserData = (): Promise<{
       ? resolve({ token: token, user: json?.email })
       : reject("Invalid User");
   });
+};
+
+export const createProduct = async (
+  product: ProductRequest
+): Promise<ProductResponse> => {
+  console.log("create product");
+  const body = JSON.stringify(product);
+  const res = await fetch("/api/products", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body,
+  });
+  return res.json();
+};
+
+export const getFeaturedProducts = async (
+  page: number
+): Promise<ProductResponse[]> => {
+  console.log("get featured");
+  const res = await fetch(`/api/products?page=${page}&limit=6`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+
+  return res.json();
+};
+
+export const searchProducts = async (
+  query: string
+): Promise<ProductResponse[]> => {
+  console.log("api fetch");
+  const productName = query.trim();
+  const res = await fetch(`api/products?name=${productName}`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return res.json();
+  }
+  return [];
+};
+
+export const uploadImages = async (data: FormData) => {
+  const response = await fetch("/api/upload", {
+    method: "POST",
+    body: data,
+  });
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
 };

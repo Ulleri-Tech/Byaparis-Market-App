@@ -3,11 +3,12 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ALL_PRODUCTS } from "@/utils/constant";
-import ProductItem from "@/components/product/productItem";
+import FeaturedProduct from "@/components/FeaturedProducts";
 
 export default function Home() {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = React.useState(() => new QueryClient({
+    defaultOptions: {queries: {staleTime: 1000*60*5}}
+  }));
 
   return (
     <>
@@ -16,20 +17,15 @@ export default function Home() {
         <title>WholesalerBase.com | Marketplace for Wholesaler</title>
       </Head>
       <main className={styles.main}>
-        <h3 className="text-xl sm:text-2xl max-w-xl">
+        <h3 className="text-xl sm:text-2xl max-w-xl mb-5">
           Welcome to <strong>Wholesaler Base</strong>, the premier online
           marketplace for wholesale products.{" "}
         </h3>
+
         <QueryClientProvider client={queryClient}>
           <Search />
+          <FeaturedProduct />
         </QueryClientProvider>
-
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 mt-6">
-          {ALL_PRODUCTS.slice(0, 6).map((product, _id) => (
-            <ProductItem key={_id} product={product} handleCheck={_id} />
-          ))}
-        </div>
         
         <div className={styles.description}>
           <div></div>

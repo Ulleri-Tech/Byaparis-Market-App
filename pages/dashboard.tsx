@@ -1,3 +1,5 @@
+import Button from "@/components/common/Button";
+import ListProduct from "@/components/product/ListProduct";
 import isLoggedIn from "@/helpers/checkAuth";
 import { useStore } from "@/store/GlobalStore";
 import Head from "next/head";
@@ -6,22 +8,22 @@ import { useEffect } from "react";
 
 export default function Dashboard() {
   const router = useRouter();
-  const {dispatch} = useStore();
+  const { dispatch } = useStore();
 
   useEffect(() => {
     const isAuthenticated = isLoggedIn();
     if (!isAuthenticated) {
-      localStorage.removeItem('token')
+      localStorage.removeItem("token");
       router.push("/login-seller");
     }
   }, [router]);
 
-  function logout(){
+  function logout() {
     dispatch({
       type: "AUTH",
       payload: {},
     });
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
     router.push("/");
   }
   return (
@@ -32,8 +34,20 @@ export default function Dashboard() {
           DashBoard | WholesalerBase.com | Marketplace for Wholesaler
         </title>
       </Head>
-      <div className="mt-20">This is Dashboard</div>
-      <button onClick={logout}>Logout</button>
+      <div className="flex mx-auto justify-around max-w-lg mt-24">
+      <div className="font-bold"> Dashboard</div>
+      <Button
+        leftIcon={<i className="ri-logout-box-line"></i>}
+        theme="danger"
+        size="small"
+        onClick={logout}
+      >
+        Logout
+      </Button>
+        
+      </div>
+     
+      <ListProduct />
     </>
   );
 }

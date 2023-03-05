@@ -1,44 +1,45 @@
-import { useQuery } from "react-query";
-import {searchProducts} from "../utils/actions";
-import React from "react";
-import useDebounce from "../utils/useDebounce";
+import { useMutation } from "react-query";
+import { searchProducts,  } from "../utils/actions";
+import { useState } from "react";
 import ProductItem from "./product/productItem";
+import React from "react";
 
 interface CustomEvent extends React.ChangeEvent<HTMLInputElement> {
   target: HTMLInputElement;
 }
 
 export default function Search() {
-  const [query, setQuery] = React.useState("");
-  const debounedQuery = useDebounce(query, 300);
+  const [query, setQuery] = useState("");
 
-  const { isLoading, isError, isSuccess, data } = useQuery(
-    ["searchProducts", debounedQuery],
-    () => searchProducts(debounedQuery),
-    {
-      enabled: debounedQuery.length > 0,
-    }
-  );
+  const searchMutation = useMutation(() => {
+    console.log("searching", query);
+    return searchProducts(query);
+  });
 
   const renderResult = () => {
-    if (isLoading) {
+    if (searchMutation.isLoading) {
       return <div className="search-message"> Loading... </div>;
     }
 
-    if (isError) {
+    if (searchMutation.isError) {
       return <div className="search-message">Something went wrong</div>;
     }
 
-    if (isSuccess) {
+    if (searchMutation.isSuccess) {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4 mt-6">
-          {data.length === 0 ? (
-            <h2>No Products</h2>
-          ) : (
-            data.map((product, _id) => (
-              <ProductItem key={_id} product={product} handleCheck={_id} />
-            ))
-          )}
+        <div className="mt-4">
+          <h2 className="pl-4 text-left text-xl font-semibold">
+            Search results:
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-4">
+            {searchMutation.data.length === 0 ? (
+              <h2>No Products</h2>
+            ) : (
+              searchMutation.data.map((product, _id) => (
+                <ProductItem key={_id} product={product} handleCheck={_id} />
+              ))
+            )}
+          </div>
         </div>
       );
     }
@@ -46,19 +47,22 @@ export default function Search() {
     return <></>;
   };
 
-
   const handleQueryChange = (event: CustomEvent) => {
     setQuery(event.target.value);
-    console.log(query);
+  };
+  const handleSearch = () => {
+    searchMutation.mutate();
   };
 
-  const handleSearch = () => {
-    console.log("Make Full search");
-  };
+  const clearSearch = ()=>{
+   setQuery("")
+   searchMutation.reset()
+  }
+
   return (
     <>
-      <div className="flex w-full justify-center px-4 ">
-        <div className="flex items-center mt-10 min-w-[400px] w-full max-w-[1000px]   ">
+      <div className="flex justify-center px-4 ">
+        <div className="flex items-center min-w-[400px] w-full max-w-[1000px]   ">
           <label htmlFor="search" className="sr-only">
             Search
           </label>
@@ -71,29 +75,37 @@ export default function Search() {
               id="search"
               value={query}
               onChange={handleQueryChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch()
+                }
+              }}
               autoComplete="off"
               className="bg-white shadow-md  border border-gray-700 text-gray-900 rounded-lg block w-full pl-10 p-2.5  "
               placeholder="Search any products..."
               required
             />
-            {query.length>0 ? <button
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-700 hover:text-gray-900 bg-transparent"
-              onClick={() => setQuery("")}
-            >
-              <svg
-                className="w-4 h-4 fill-current"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+            {query.length > 0 ? (
+              <button
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-700 hover:text-gray-900 bg-transparent"
+                onClick={clearSearch}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 10-1.414-1.414L10 8.586l-2.293-2.293a1 1 0 00-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 001.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button> 
-            : ""}
+                <svg
+                  className="w-4 h-4 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 10-1.414-1.414L10 8.586l-2.293-2.293a1 1 0 00-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 001.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            ) : (
+              ""
+            )}
           </div>
           <button
             type="button"
@@ -120,7 +132,7 @@ export default function Search() {
         </div>
       </div>
 
-      <div>{ renderResult()}</div>
+      {renderResult()}
     </>
   );
 }

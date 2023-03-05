@@ -1,8 +1,7 @@
 import connectToDatabase from "../../helpers/connectDB";
 import type { NextApiRequest, NextApiResponse } from "next";
-import Product from "@/helpers/models/products";
+import {Product} from "@/helpers/models/products";
 import {
-  CreatedResponse,
   ErrorResponse,
   ProductResponse,
 } from "@/helpers/types";
@@ -14,7 +13,7 @@ import {
  */
 export default async function ProductAPI (
   req: NextApiRequest,
-  res: NextApiResponse<ProductResponse[] | CreatedResponse | ErrorResponse>
+  res: NextApiResponse<ProductResponse[] | ProductResponse | ErrorResponse>
 ){
   await connectToDatabase();
   switch (req.method) {
@@ -56,18 +55,16 @@ class APIfeatures {
     excludeFields.forEach((el) => delete queryObj[el]);
     let options: { [key: string]: any } = {};
     if (queryObj.category && queryObj.category !== "all")
-      
       options["category"] = queryObj.category;
     if (queryObj.name && queryObj.name !== "all")
-      options["name"] = { $regex: queryObj.name };
+      options["name"] = { $regex: queryObj.name, $options: "i" };
 
     const projection = {
       updatedAt: 0,
       __v: 0,
     };
-    console.log(options)
-    this.query = this.query.find(options, projection);
 
+    this.query = this.query.find(options, projection);
     return this;
   }
 
@@ -103,7 +100,7 @@ class APIfeatures {
 
 async function createProduct(
   req: NextApiRequest,
-  res: NextApiResponse<CreatedResponse | ErrorResponse>
+  res: NextApiResponse<ProductResponse | ErrorResponse>
 ) {
   try {
     // const result = await auth(req, res)
@@ -136,7 +133,7 @@ async function createProduct(
 
     await newProduct.save();
 
-    res.status(201).end("Success! Created a new product");
+    res.status(201).json(newProduct)
   } catch (err) {
     console.log(err);
     return res.status(500).json({ err: "Failed to create product" });
