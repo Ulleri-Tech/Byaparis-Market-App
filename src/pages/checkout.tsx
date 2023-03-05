@@ -14,6 +14,7 @@ export default function Dashboard() {
           Checkout | WholesalerBase.com | Marketplace for Wholesaler
         </title>
       </Head>
+        
       <main className={styles.main}>
         <h2 className="font-semibold text-xl pb-4">This is Checkout Page</h2>
         <div className="flex w-full mx-auto text-left justify-center">

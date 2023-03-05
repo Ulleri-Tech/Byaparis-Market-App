@@ -1,5 +1,6 @@
-import jwt from "jsonwebtoken";
 import { ProductRequest, ProductResponse } from "@/helpers/types";
+import jwt from "jsonwebtoken";
+import { server } from './config'
 
 export const loginRequest = async (
   email: string,
@@ -7,7 +8,7 @@ export const loginRequest = async (
 ): Promise<{ token: string; user: string }> => {
   const body = JSON.stringify({ email, password });
 
-  return await fetch("/api/auth/login", {
+  return await fetch(`${server}/api/auth/login`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -39,7 +40,7 @@ export const createProduct = async (
 ): Promise<ProductResponse> => {
   console.log("create product");
   const body = JSON.stringify(product);
-  const res = await fetch("/api/products", {
+  const res = await fetch(`${server}/api/products`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -52,14 +53,15 @@ export const createProduct = async (
 export const getFeaturedProducts = async (
   page: number
 ): Promise<ProductResponse[]> => {
-  console.log("get featured");
-  const res = await fetch(`/api/products?page=${page}&limit=6`, {
+
+  const res = await fetch(`${server}/api/products?page=${page}&limit=6`, {
     method: "GET",
+    cache: 'force-cache',
     headers: {
       "content-type": "application/json",
     },
   });
-
+  console.log("getting server");
   return res.json();
 };
 
@@ -68,7 +70,7 @@ export const searchProducts = async (
 ): Promise<ProductResponse[]> => {
   console.log("api fetch");
   const productName = query.trim();
-  const res = await fetch(`api/products?name=${productName}`, {
+  const res = await fetch(`${server}/api/products?name=${productName}`, {
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -81,7 +83,7 @@ export const searchProducts = async (
 };
 
 export const uploadImages = async (data: FormData) => {
-  const response = await fetch("/api/upload", {
+  const response = await fetch(`${server}/api/upload`, {
     method: "POST",
     body: data,
   });
