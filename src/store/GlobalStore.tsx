@@ -14,8 +14,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   };
   const [state, dispatch] = useReducer(reducers, initialState);
 
-  const { cart, auth } = state;
-
   useEffect(() => {
     const login_user = localStorage.getItem("token");
     if (login_user) {
@@ -36,7 +34,6 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const cart_storage = localStorage.getItem("__cart__");
-    console.log(cart);
     if (cart_storage) {
       const exiting_cart_items = JSON.parse(cart_storage);
       if (exiting_cart_items.length > 0)

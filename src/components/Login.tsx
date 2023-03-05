@@ -1,6 +1,6 @@
 import {useState } from "react";
 import { useRouter } from "next/router";
-import { useStore } from "@/store/GlobalStore";
+import { DataProvider, useStore } from "@/store/GlobalStore";
 import { loginRequest } from "@/utils/actions";
 
 export default function Login() {
@@ -12,16 +12,16 @@ export default function Login() {
   async function submitForm() {
 
     const res = await loginRequest(email,password)
-
     if (res.token) {
-      dispatch({ type: "AUTH", payload: {token:res.token,user:res.user} });
+      dispatch({ type: "AUTH", payload: res });
       // Add the token to local storage
-       localStorage.setItem("token", res.token);
+       localStorage.setItem("userCredentials", JSON.stringify(res));
        router.push("/dashboard");
     }
   }
   return (
     <>
+          <DataProvider>
       <div className="flex flex-col items-center text-left justify-center px-6 py-8 mx-auto  lg:py-0">
         <div className="w-full bg-gray-50 rounded-lg shadow border border-gray-200 md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -108,6 +108,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      </DataProvider>
     </>
   );
 }

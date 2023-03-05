@@ -39,7 +39,7 @@ export default function Header() {
                 href="/dashboard"
                 className="flex py-2 pl-3 pr-4 text-gray-700  items-center gap-1 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 "
               >
-                Hello, {state.auth.user}
+                Hello, {state.auth.email}
               </Link>
             ) : (
               <Link

@@ -62,7 +62,7 @@ export default function Search() {
   return (
     <>
       <div className="flex justify-center px-4 ">
-        <div className="flex items-center min-w-[400px] w-full max-w-[1000px]   ">
+        <div className="flex items-center sm:min-w-[400px] w-full max-w-[1000px]">
           <label htmlFor="search" className="sr-only">
             Search
           </label>
