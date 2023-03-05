@@ -23,3 +23,9 @@ export type ProductResponse = {
     images: string[],
     inStock: number
   };
+
+  export interface UserCredential {
+    email: string;
+    token:string;
+    lastlogin: string;
+  }

@@ -1,11 +1,13 @@
 import { ProductRequest, ProductResponse } from "@/helpers/types";
 import jwt from "jsonwebtoken";
 import { server } from './config'
+import {UserCredential} from '../helpers/types'
+
 
 export const loginRequest = async (
   email: string,
   password: string
-): Promise<{ token: string; user: string }> => {
+): Promise<UserCredential> => {
   const body = JSON.stringify({ email, password });
 
   return await fetch(`${server}/api/auth/login`, {
@@ -56,19 +58,19 @@ export const getFeaturedProducts = async (
 
   const res = await fetch(`${server}/api/products?page=${page}&limit=6`, {
     method: "GET",
-    cache: 'force-cache',
+    cache: 'force-cache', //SSG
     headers: {
       "content-type": "application/json",
     },
   });
-  console.log("getting server");
+  console.log("getting product from server");
   return res.json();
 };
 
 export const searchProducts = async (
   query: string
 ): Promise<ProductResponse[]> => {
-  console.log("api fetch");
+  console.log("seraching from fetch");
   const productName = query.trim();
   const res = await fetch(`${server}/api/products?name=${productName}`, {
     method: "GET",

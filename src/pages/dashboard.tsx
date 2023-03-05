@@ -13,17 +13,21 @@ export default function Dashboard() {
   useEffect(() => {
     const isAuthenticated = isLoggedIn();
     if (!isAuthenticated) {
-      localStorage.removeItem("token");
+      localStorage.removeItem("userCredentials");
       router.push("/login-seller");
+      dispatch({
+        type: "AUTH",
+        payload: {},
+      });
     }
-  }, [router]);
+  }, [router, dispatch]);
 
   function logout() {
     dispatch({
       type: "AUTH",
       payload: {},
     });
-    localStorage.removeItem("token");
+    localStorage.removeItem("userCredentials");
     router.push("/");
   }
   return (

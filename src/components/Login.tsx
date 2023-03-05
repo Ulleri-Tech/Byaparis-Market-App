@@ -12,11 +12,10 @@ export default function Login() {
   async function submitForm() {
 
     const res = await loginRequest(email,password)
-
     if (res.token) {
-      dispatch({ type: "AUTH", payload: {token:res.token,user:res.user} });
+      dispatch({ type: "AUTH", payload: res });
       // Add the token to local storage
-       localStorage.setItem("token", res.token);
+       localStorage.setItem("userCredentials", JSON.stringify(res));
        router.push("/dashboard");
     }
   }
