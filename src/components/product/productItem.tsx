@@ -33,7 +33,7 @@ const ProductItem = ({ product, handleCheck }: any) => {
           alt={product.images[0]}
           width={300}
           height={300}
-          className="format-image"
+          className="format-image"  
         />
       </div>
       <div className="px-5 pb-5 pt-2 text-base">
