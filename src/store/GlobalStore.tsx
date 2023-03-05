@@ -9,7 +9,7 @@ export const useStore = () => useContext(DataContext);
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const initialState = {
     auth: {},
-    cart: [],
+    cart: {cartItems: []},
     orders: [],
   };
   const [state, dispatch] = useReducer(reducers, initialState);
@@ -33,12 +33,12 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   },[]);
 
   useEffect(() => {
-    const cart_storage = localStorage.getItem("__cart__");
-    if (cart_storage) {
-      const exiting_cart_items = JSON.parse(cart_storage);
-      if (exiting_cart_items.length > 0)
-        dispatch({ type: "ADD_CART", payload: exiting_cart_items });
-    }
+    // const cart_storage = localStorage.getItem("__cart__");
+    // if (cart_storage) {
+    //   const exiting_cart_items = JSON.parse(cart_storage);
+    //   if (exiting_cart_items.length > 0)
+    //     dispatch({ type: "ADD_CART", payload: exiting_cart_items });
+    // }
   }, []);
 
   return (

@@ -1,23 +1,23 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { QueryClient, QueryClientProvider } from "react-query";
 import React from "react";
-import Search from "@/components/Search";
+import SearchBar from "@/components/SearchBar";
 import { GetStaticProps } from "next";
 import { getFeaturedProducts } from "@/utils/actions";
 import { ProductResponse } from "@/helpers/types";
 import FeaturedProduct from "@/components/FeaturedProduct";
+import { useRouter } from "next/router";
 
 interface HomeProps {
   products: ProductResponse[];
 }
 export default function Home({ products }: HomeProps) {
-  const [queryClient] = React.useState(
-    () =>
-      new QueryClient({
-        defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
-      })
-  );
+  const router = useRouter();
+
+  const handleSearch = (query: string) => {
+    router.push(`/search?q=${query}`);
+  };
+
   return (
     <>
       <Head>
@@ -29,10 +29,7 @@ export default function Home({ products }: HomeProps) {
           Welcome to <strong>Wholesaler Base</strong>, the premier online
           marketplace for wholesale products.{" "}
         </h3>
-
-        <QueryClientProvider client={queryClient}>
-          <Search />
-        </QueryClientProvider>
+          <SearchBar onSearch={handleSearch} />
         {products && <FeaturedProduct products={products}/>}
       </main>
     </>

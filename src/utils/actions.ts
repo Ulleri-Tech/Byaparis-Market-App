@@ -74,6 +74,7 @@ export const searchProducts = async (
   const productName = query.trim();
   const res = await fetch(`${server}/api/products?name=${productName}`, {
     method: "GET",
+    cache: "no-cache",
     headers: {
       "content-type": "application/json",
     },
