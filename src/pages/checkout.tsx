@@ -74,18 +74,18 @@ export default function Dashboard() {
                         </p>
 
                         <div className="flex items-center gap-1 ">
+                           <button
+                            onClick={() => changeQuantity(item, "add")}
+                            className="hover:text-red-500 flex items-center"
+                          >
+                            <i className="ri-add-box-line ri-lg"></i>
+                          </button>
+                          <span className="">{item.quantity}</span>
                           <button
                             onClick={() => changeQuantity(item, "remove")}
                             className="hover:text-emerald-500 items-center flex"
                           >
                             <i className="ri-checkbox-indeterminate-line ri-lg"></i>
-                          </button>
-                          <span className="">{item.quantity}</span>
-                          <button
-                            onClick={() => changeQuantity(item, "add")}
-                            className="hover:text-red-500 flex items-center"
-                          >
-                            <i className="ri-add-box-line ri-lg"></i>
                           </button>
                         </div>
                       </div>
