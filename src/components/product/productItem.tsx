@@ -4,19 +4,27 @@ import Button from "../common/Button";
 import ImageTag from "../ImageTag";
 
 const ProductItem = ({ product, handleCheck }: any) => {
-  const { dispatch } = useStore();
+  const { state, dispatch } = useStore();
 
-  function addData() {
-    dispatch({ type: "ADD_CART", payload: [product] });
-    const existing_items = localStorage.getItem("__cart__");
-    if (existing_items && existing_items.length > 0) {
-      let new_cart = JSON.parse(existing_items);
-      new_cart.push(product);
-      localStorage.setItem("__cart__", JSON.stringify(new_cart));
-    } else {
-      localStorage.setItem("__cart__", JSON.stringify([product]));
-    }
+  function addToCartHandler() {
+    const existItem = state.cart.cartItems.find(
+      (item:any) => item._id== product._id
+    );
+   const quantity = existItem ? (existItem?.quantity || 0) + 1 : 1;
+    dispatch({ type: "ADD_CART", payload: { ...product, quantity: quantity } });
+    // const existing_items = localStorage.getItem("__cart__");p>f
+
+    // if (existing_items && existing_items.length > 0) {
+    //   let new_cart = JSON.parse(existing_items);
+
+    //   new_cart.push(product);
+
+    //   localStorage.setItem("__cart__", JSON.stringify(new_cart));
+    // } else {
+    //   localStorage.setItem("__cart__", JSON.stringify({product, quantity:1}));
+    // }
   }
+
   return (
     <div className="w-[18rem] bg-white border border-gray-200 rounded-lg shadow ">
       <div className="flex h-48">
@@ -25,7 +33,7 @@ const ProductItem = ({ product, handleCheck }: any) => {
           alt={product.images[0]}
           width={300}
           height={300}
-          className="format-image"
+          className="format-image"  
         />
       </div>
       <div className="px-5 pb-5 pt-2 text-base">
@@ -55,7 +63,7 @@ const ProductItem = ({ product, handleCheck }: any) => {
           <h6 className="text-3xl font-bold text-gray-900 ">
             ${product.price}
           </h6>
-          <Button theme="blue" onClick={addData}>
+          <Button theme="blue" onClick={addToCartHandler}>
             {" "}
             Add to cart
           </Button>

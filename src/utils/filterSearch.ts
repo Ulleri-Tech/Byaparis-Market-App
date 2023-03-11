@@ -1,7 +1,7 @@
 const filterSearch = ({router, page, category, sort, search}:any) => {
     const path = router.pathname;
     const query = router.query;
-
+    console.log(path,query,page)
 
     if(category) query.category = category;
     if(page) query.page = page;
